@@ -15,6 +15,7 @@ RSpec.configure do |config|
 
   config.before do
     FileUtils.rm_rf(test_dir)
+    FileUtils.mkdir_p("#{__dir__}/tmp")
     FileUtils.mkdir_p("#{test_dir}/a")
     FileUtils.mkdir_p("#{test_dir}/b")
     FileUtils.mkdir_p("#{test_dir}/c/d")
@@ -27,6 +28,7 @@ RSpec.configure do |config|
 
   config.after do
     FileUtils.rm_rf(test_dir)
+    FileUtils.rm_rf("#{__dir__}/tmp")
   end
 
   def test_dir

@@ -3,11 +3,18 @@ require "pry"
 
 module Relinker
   class Discoverer
+
+    attr_reader :options, :cache_dir
+
+    def initialize(options = {})
+      @options = merge_options(options)
+      @cache_dir = @options[:cache_dir]
+    end
+
     def collect(base_dir)
-      cache_file = "#{Dir.pwd}/relinker_cache_#{Time.now.to_i}"
       File.open(cache_file, "a+") do |cache|
         discover(base_dir) do |file, checksum|
-          cache.writeln("#{checksum} #{file}\n")
+          cache.write("#{checksum} #{file}\n")
         end
       end
     end
@@ -33,6 +40,19 @@ module Relinker
     end
 
     private
+
+    def cache_file
+      "#{cache_dir}/relinker_cache_#{Time.now.to_i}"
+    end
+
+    def merge_options(options = {})
+      options = options.map { |key, val| [key.to_sym, val] }.to_h
+      default_options.merge(options)
+    end
+
+    def default_options
+      { cache_dir: "/tmp" }
+    end
 
     def checksum(file)
       Digest::MD5.file(file).hexdigest

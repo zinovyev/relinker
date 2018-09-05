@@ -26,6 +26,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
+    timecop (0.9.1)
 
 PLATFORMS
   ruby
@@ -36,6 +37,7 @@ DEPENDENCIES
   rake (~> 10.0)
   relinker!
   rspec (~> 3.0)
+  timecop
 
 BUNDLED WITH
    1.16.3
