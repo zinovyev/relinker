@@ -1,5 +1,6 @@
-# vi:syntax=ruby
 #!/usr/bin/env ruby
+# vi:syntax=ruby
 
 require "relinker"
+
 Relinker.run(ARGV)

@@ -8,7 +8,7 @@ module Relinker
     end
 
     def run
-      discoverer.collect
+      discoverer.collect(@dir)
       linker.relink_identicals
     end
 

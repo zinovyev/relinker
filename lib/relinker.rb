@@ -4,6 +4,8 @@ require "relinker/linker"
 require "relinker/application"
 
 module Relinker
+  extend self
+
   def run(args)
     Application.new(args[0]).run
   end
