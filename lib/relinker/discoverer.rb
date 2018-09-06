@@ -14,9 +14,15 @@ module Relinker
     def collect(base_dir)
       File.open(cache_file, "a+") do |cache|
         discover(base_dir) do |file, checksum|
-          cache.write("#{checksum} #{file}\n")
+          cache.write("#{checksum}$$$\t#{file}\n")
         end
       end
+      resort_cache
+    end
+
+    def resort_cache
+      system("cat #{cache_file} | sort | uniq | cat > #{cache_file}.tmp \
+              && mv #{cache_file}.tmp #{cache_file}")
     end
 
     def discover(base_dir)
