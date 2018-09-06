@@ -14,7 +14,7 @@ RSpec.configure do |config|
   end
 
   config.before do
-    FileUtils.rm_rf(test_dir)
+    remove_tmp_dirs
     FileUtils.mkdir_p("#{__dir__}/tmp")
     FileUtils.mkdir_p("#{test_dir}/a")
     FileUtils.mkdir_p("#{test_dir}/b")
@@ -27,6 +27,10 @@ RSpec.configure do |config|
   end
 
   config.after do
+    remove_tmp_dirs
+  end
+
+  def remove_tmp_dirs
     FileUtils.rm_rf(test_dir)
     FileUtils.rm_rf("#{__dir__}/tmp")
   end

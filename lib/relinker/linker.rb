@@ -9,6 +9,18 @@ module Relinker
       reset_state
     end
 
+    def relink_identicals
+      loop_identicals do |checksum, identicals|
+        next if identicals.count <= 1
+        origin = identicals.shift
+        identicals.each do |identical|
+          # Check if file exists for the case when it was removed
+          # while the script was running
+          system("ln -f #{origin} #{identical}") if File.exist?(origin)
+        end
+      end
+    end
+
     def loop_identicals(&block)
       loop_files do |checksum, file|
         publish_state(&block) if checksum != @prev_checksum
