@@ -4,11 +4,11 @@ require "pry"
 module Relinker
   class Discoverer
 
-    attr_reader :options, :cache_dir
+    attr_reader :options, :cache_file
 
-    def initialize(options = {})
-      @options = merge_options(options)
-      @cache_dir = @options[:cache_dir]
+    def initialize(cache_file, options = {})
+      @cache_file = cache_file
+      @options = options
     end
 
     def collect(base_dir)
@@ -46,10 +46,6 @@ module Relinker
     end
 
     private
-
-    def cache_file
-      "#{cache_dir}/relinker_cache_#{Time.now.to_i}"
-    end
 
     def merge_options(options = {})
       options = options.map { |key, val| [key.to_sym, val] }.to_h
