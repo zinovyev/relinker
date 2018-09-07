@@ -1,3 +1,5 @@
+require "pathname"
+require "digest"
 require "relinker/version"
 require "relinker/discoverer"
 require "relinker/linker"
