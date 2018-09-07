@@ -1,5 +1,4 @@
 require "digest"
-require "pry"
 
 module Relinker
   class Discoverer
