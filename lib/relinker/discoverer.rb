@@ -29,9 +29,9 @@ module Relinker
       children.each do |child|
         next if child.symlink?
         if child.directory?
-          discover(child) { |file| yield(file, checksum(file)) }
+          discover(child) { |file| yield(file, checksum(file)) if regular_file?(file) }
         else
-          yield(child, checksum(child))
+          yield(child, checksum(child)) if regular_file?(child)
         end
       end
     end
@@ -45,6 +45,12 @@ module Relinker
     end
 
     private
+
+    def regular_file?(path)
+      special_types = %i[symlink chardev blockdev socket pipe]
+      special_type = special_types.find { |test| path.send("#{test}?") }
+      path.file? && !special_type && !path.to_s.match(/:|pid$|swap$|lock$/)
+    end
 
     def merge_options(options = {})
       options = options.map { |key, val| [key.to_sym, val] }.to_h
